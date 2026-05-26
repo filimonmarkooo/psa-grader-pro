@@ -1,33 +1,17 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const app = express();
 
-// Determine where index.html is located
-const publicPath = path.join(__dirname, 'public');
-const indexPath = path.join(publicPath, 'index.html');
+// Serve everything in the public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve static files from public folder
-app.use(express.static(publicPath));
-
-// Health check for Railway
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
-});
-
-// Serve the main app
-app.get('/', (req, res) => {
-  res.sendFile(indexPath);
-});
-
-// 404 fallback to index.html (for SPA routing)
-app.use((req, res) => {
-  res.sendFile(indexPath);
+// Fallback - serve index.html for all routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`PSA Grader Pro running on port ${PORT}`);
-  console.log(`Open http://localhost:${PORT} in your browser`);
+  console.log(`PSA Grader Pro listening on port ${PORT}`);
 });
