@@ -2,16 +2,11 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Serve everything in the public folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 
-// Fallback - serve index.html for all routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`PSA Grader Pro listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));
