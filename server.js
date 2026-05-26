@@ -1,9 +1,14 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 
-// Serve static files from root
-app.use(express.static(path.join(__dirname)));
+// Determine where index.html is located
+const publicPath = path.join(__dirname, 'public');
+const indexPath = path.join(publicPath, 'index.html');
+
+// Serve static files from public folder
+app.use(express.static(publicPath));
 
 // Health check for Railway
 app.get('/health', (req, res) => {
@@ -12,12 +17,12 @@ app.get('/health', (req, res) => {
 
 // Serve the main app
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(indexPath);
 });
 
 // 404 fallback to index.html (for SPA routing)
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(indexPath);
 });
 
 const PORT = process.env.PORT || 3000;
