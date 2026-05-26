@@ -1,0 +1,8 @@
+{
+  "builder": "nixpacks",
+  "buildCommand": "npm install",
+  "startCommand": "npm start",
+  "nixpacks": {
+    "providers": ["nodejs-npm"]
+  }
+}
