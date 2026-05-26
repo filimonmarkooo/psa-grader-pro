@@ -1,25 +1,15 @@
 {
   "name": "psa-grader-pro",
   "version": "1.0.0",
-  "description": "AI-powered PSA card grading tool with multi-pass enhancement",
+  "description": "AI-powered PSA card grading tool",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "keywords": [
-    "psa",
-    "grading",
-    "cards",
-    "ai",
-    "trading cards"
-  ],
-  "author": "",
-  "license": "MIT",
-  "engines": {
-    "node": "18.x"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
