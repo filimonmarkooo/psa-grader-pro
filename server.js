@@ -1,27 +1,30 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(__dirname));
 
-app.get('*', (req, res) => {
-  try {
-    res.sendFile(path.join(__dirname, 'index.html'));
-  } catch (err) {
-    res.status(500).send('Error loading app');
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.send('<h1>App Loading...</h1><p>index.html not found</p>');
   }
 });
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Running on port ${PORT}`);
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.send('<h1>App Loading...</h1><p>index.html not found</p>');
+  }
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-});
-
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
